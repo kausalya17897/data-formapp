@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Formfull from './Component/Formfull';
+import Table from './Component/Table';
+import {Switch,Route} from 'react-router-dom'
+import {Editform} from './Component/Editform';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route exact path="/"></Route>
+        <Route  exact path="/employee/edit:id"><Editform/>fgdh</Route>
+        <Route exact path="/employee/:id"></Route>
+        <Route exact path="/employee"> <Formfull/>
+     </Route>
+        <Route exact path="**">not found</Route>
+      </Switch>
+     
     </div>
   );
 }

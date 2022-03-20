@@ -1,0 +1,9 @@
+   fullname:'',
+   dob:'',
+   img:'',
+   mobile:'',
+   email:'',
+   location:'',
+   jobtype:'',
+   countrycode:'',
+ })

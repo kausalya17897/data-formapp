@@ -1,47 +1,49 @@
 import React from 'react';
 import './Form.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import {  Row, Col,Form,Container,Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Select,MenuItem ,Button,IconButton} from '@mui/material';
-import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import Table from './Table';
+import { Select,MenuItem ,Button} from '@mui/material';
+import {useParams,useHistory} from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-export default function Formfull() {
-  const [countrycode, setCountrycode] = useState('');
-  const [jobtype, setJobtype] = useState('');
-  const [location, setLocation] =useState('');
- const [fullname,setFullname]=useState('');
- const [dob,setDob]=useState('');
- const [img,setImg]=useState("");
- const [email,setEmail]=useState("")
- const [mobile,setMobile]=useState("");
- const history=useHistory();
-
- const addemployee=()=>{
-   console.log("adding...",fullname,email,mobile,dob,location,jobtype,img)
-   const newEmployee={
-    fullname,email,mobile,dob,location,jobtype,img
-   }
-   fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
-     method:"POST",
-     body:JSON.stringify(newEmployee),
-     headers:{
-       "content-Type":"application/json",
-     },
-   }).then(()=>history.push("/employee"))
-  }
-  useEffect(() => {
-    addemployee() 
-      
-  }, [])
- const handleChange=(a)=>{
-   if(a.target.files.length!==0){
-     setImg(URL.createObjectURL(a.target.files[0]))
+export  function Editform() {
+    console.log("edit")
+    const {id}=useParams();
+    const[employee,setEmployee]=useState(null)
+    useEffect(() => {
+        fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee${id}`,{
+        method:"GET",
+    })
+    .then((data)=>data.json())
+    .then((a)=>setEmployee(a))
+},[id]);
+    return employee?<UpdatedEmployee employee={employee}/>:"";
     }
-  }
-
+function UpdatedEmployee({employee}){
+  const[countrycode,setCountrycode]=useState(employee.countrycode)
+  const [jobtype, setJobtype] = useState(employee.jobtype);
+  const [location, setLocation] =useState(employee.location);
+ const [fullname,setFullname]=useState(employee.fullname);
+ const [dob,setDob]=useState(employee.dob);
+ const [img,setImg]=useState(employee.img);
+ const [email,setEmail]=useState(employee.email)
+ const [mobile,setMobile]=useState(employee.mobile);
+ 
+  const history=useHistory();
+const editEmployee=()=>{
+    
+    const updatedEmployee={
+        fullname,img,email,mobile,location,jobtype,dob
+    };
+    fetch(`https://61681515ba841a001727c589.mockapi.io/movie${employee.id}`,{
+        method:"PUT",
+        body:JSON.stringify(updatedEmployee),
+        headers:{
+        "Content-Type":"application/json",
+        },
+    }).then(()=>history.push("/employee"))
+};
   return (
     <div className='Form'>
     
@@ -69,7 +71,7 @@ export default function Formfull() {
       <input type="file"
       accept='image/*'
       value={img}
-      onChange={handleChange}/>
+      />
     </Col>
   </Row>
   <Row>
@@ -87,7 +89,7 @@ export default function Formfull() {
           </MenuItem>
           <MenuItem value={+91}>+91</MenuItem>
           <MenuItem value={+47}>+47</MenuItem>
-          <MenuItem value={+385}>+385</MenuItem>
+          <MenuItem value={+35}>+385</MenuItem>
         </Select>
       <input className='Mobile' type="text"
       value={mobile}
@@ -143,21 +145,22 @@ export default function Formfull() {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={"chennai"}>Chennai</MenuItem>
+          <MenuItem value={"Chennai"}>Chennai</MenuItem>
           <MenuItem value={"Bangalore"}>Bangalore</MenuItem>
           <MenuItem value={"Coimbatore"}>Coimbatore</MenuItem>
         </Select>
      
     </Col>
     <Col xl={6} className="">
-    <Button variant="contained" onClick={addemployee}>+Add/Update</Button>
+    <Button variant="outlined" onClick={editEmployee}>Updated</Button>
+    <Button variant="outlined" onClick={()=>history.goBack("/employee")}
+    startIcon={<ArrowBackIcon/>}>Back</Button>
     </Col>
   </Row>
   
 
   </Container>
   </fieldset>
-  <Table/>
 </Form>
 
     </div>
