@@ -12,7 +12,7 @@ export  function Editform() {
     const {id}=useParams();
     const[employee,setEmployee]=useState(null)
     useEffect(() => {
-        fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee${id}`,{
+        fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee/${id}`,{
         method:"GET",
     })
     .then((data)=>data.json())
@@ -36,7 +36,7 @@ const editEmployee=()=>{
     const updatedEmployee={
         fullname,img,email,mobile,location,jobtype,dob
     };
-    fetch(`https://61681515ba841a001727c589.mockapi.io/movie${employee.id}`,{
+    fetch(`https://61681515ba841a001727c589.mockapi.io/movie/${employee.id}`,{
         method:"PUT",
         body:JSON.stringify(updatedEmployee),
         headers:{
