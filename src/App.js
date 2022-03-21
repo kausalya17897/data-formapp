@@ -13,7 +13,7 @@ function App() {
       <Link to="/employee/" className='head'>Registrationform</Link>
       <Switch>
         <Route exact path="/"><Welcome/></Route>
-        <Route  exact path="/employee/edit:id"><Editform/>fgdh</Route>
+        <Route  exact path="/employee/edit/:id"><Editform/></Route>
         <Route exact path="/employee/:id"></Route>
         <Route exact path="/employee"> <Formfull/>
      </Route>
