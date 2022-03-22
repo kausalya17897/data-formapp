@@ -9,14 +9,16 @@ export default function Table() {
   const [employee,setEmployee]=useState([]);
   const history=useHistory()
   const getEmployee=()=>{
-    fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`)
+    //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`)
+    fetch(`https://paripornaform.herokuapp.com/employee`)
     .then((data)=>data.json())
     .then((a)=>setEmployee(a))
     console.log(employee)
   }
   useEffect(getEmployee,[])
   const deleteEmployee = (id) => {
-    fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee/${id}`,{
+    fetch(`https://paripornaform.herokuapp.com/employee/${id}`,{
+   // fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee/${id}`,{
       method:"DELETE",
   }).then(()=>getEmployee());
     };
@@ -35,7 +37,7 @@ export default function Table() {
         </tr>
     </thead>
     <tbody>
-      {employee.map(({id,fullname,mobile,email,img,jobtype,dob,location})=>(
+      {employee.map(({_id,fullname,mobile,email,img,jobtype,dob,location},index)=>(
         <tr>
         <td>{fullname}</td>
         <td>{email}</td>
@@ -45,16 +47,16 @@ export default function Table() {
         <td> <button  
         className="editbutton"
                       onClick={()=>{
-                        console.log(id)
-                        history.push(`employee/edit/${id}`)
+                        console.log(_id)
+                        history.push(`employee/edit/${_id}`)
                       }}
                     >
                       Edit
                     </button>
                     <button
                       type="button"
-                      onClick={() => deleteEmployee(id)}
-                      className="deletebutton "
+                      onClick={() => deleteEmployee(_id)}
+                      className="deletebutton"
                       style={{marginLeft:"20px"}}
                     >
                       Delete

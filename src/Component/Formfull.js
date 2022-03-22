@@ -24,7 +24,8 @@ export default function Formfull() {
    const newEmployee={
     fullname,email,mobile,dob,location,jobtype,img
    }
-   fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
+   //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
+     fetch(`https://paripornaform.herokuapp.com/employee`,{
      method:"POST",
      body:JSON.stringify(newEmployee),
      headers:{
