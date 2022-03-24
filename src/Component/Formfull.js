@@ -24,7 +24,7 @@ export default function Formfull() {
    const newEmployee={
     fullname,email,mobile,dob,location,jobtype,img
    }
-  // fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
+   //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
      fetch(`https://paripornaform.herokuapp.com/employee`,{
      method:"POST",
      body:JSON.stringify(newEmployee),
@@ -51,7 +51,7 @@ export default function Formfull() {
       <Container>
   <Row>
     <Col xl={6} className="fullnamecontainer">
-      <label for="fullname la">Fullname</label>
+      <html for="fullname la">Fullname</html>
       <input className='fullname' 
       type="text"
       value={fullname}
@@ -59,7 +59,7 @@ export default function Formfull() {
     
     </Col>
     <Col xl={6} className="img">
-      <label for="profilepic la">Profile Pic</label>
+      <html for="profilepic la">Profile Pic</html>
       <Card className='imagebox'>
         
         <img  className="image"src={img} 
@@ -75,12 +75,12 @@ export default function Formfull() {
   </Row>
   <Row>
     <Col xl={6} className="mobilecontainer input">
-      <label for="mobile la">Mobile</label>
+      <html for="mobile la">Mobile</html>
       <Select
-          labelId="demo-simple-select-required-label"
+          labelId="demo-simple-select-required-html"
           id="demo-simple-select-required"
           value={countrycode}
-          label="Age *"
+          html="Age *"
           onChange={(event)=>setCountrycode(event.target.value)}
         >
           <MenuItem value="">
@@ -96,7 +96,7 @@ export default function Formfull() {
     
     </Col>
     <Col xl={6} className="emailcontainer">
-      <label for="email la">Email Id</label>
+      <html for="email la">Email Id</html>
       <input className='emailinput' type="email"
       value={email}
       onChange={(event)=>setEmail(event.target.value)}/>
@@ -104,13 +104,13 @@ export default function Formfull() {
   </Row>
   <Row>
     <Col xl={6} className="Jobcontainer">
-      <label for="Jobtype la">Job Type</label>
+      <html for="Jobtype la">Job Type</html>
       <Select
           className='input'
-          labelId="demo-simple-select-required-label"
+          labelId="demo-simple-select-required-html"
           id="demo-simple-select-required"
           value={jobtype}
-          label="Age *"
+          html="Age *"
           onChange={(event)=>setJobtype(event.target.value)}
         >
           <MenuItem value="">
@@ -123,7 +123,7 @@ export default function Formfull() {
     
     </Col>
     <Col xl={6} className="dobcontainer">
-      <label for="dob la"> DOB</label>
+      <html for="dob la"> DOB</html>
       <input className='dob' type="date"
       value={dob}
        onChange={(a)=>setDob(a.target.value)}/>
@@ -132,13 +132,13 @@ export default function Formfull() {
   
   <Row>
     <Col xl={6} className="locationcontainer input">
-      <label for="location la">Pref. Location</label>
+      <html for="location la">Pref. Location</html>
       <Select
           className='input'
-          labelId="demo-simple-select-required-label"
+          labelId="demo-simple-select-required-html"
           id="demo-simple-select-required"
           value={location}
-          label="Age *"
+          html="Age *"
           onChange={(event)=>setLocation(event.target.value)}
         >
           <MenuItem value="">

@@ -9,16 +9,16 @@ export default function Table() {
   const [employee,setEmployee]=useState([]);
   const history=useHistory()
   const getEmployee=()=>{
-    //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`)
-   fetch(`https://paripornaform.herokuapp.com/employee`)
+    fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`)
+  // fetch(`https://paripornaform.herokuapp.com/employee`)
     .then((data)=>data.json())
-    .then((a)=>setEmployee(a))
+    .then((a)=>setEmployee(a.data))
     console.log("employee",employee)
   }
   useEffect(getEmployee,[])
   const deleteEmployee = (id) => {
-    fetch(`https://paripornaform.herokuapp.com/employee/${id}`,{
-   // fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee/${id}`,{
+    //fetch(`https://paripornaform.herokuapp.com/employee/${id}`,{
+   fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee/${id}`,{
       method:"DELETE",
   }).then(()=>getEmployee());
     };
