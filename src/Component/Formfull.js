@@ -3,7 +3,7 @@ import './Form.css';
 import { useState } from 'react';
 import {  Row, Col,Form,Container,Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Select,MenuItem ,Button,IconButton} from '@mui/material';
+import { Select,MenuItem ,Button,} from '@mui/material';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Table from './Table';
@@ -24,7 +24,7 @@ export default function Formfull() {
    const newEmployee={
     fullname,email,mobile,dob,location,jobtype,img
    }
-   //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
+  // fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
      fetch(`https://paripornaform.herokuapp.com/employee`,{
      method:"POST",
      body:JSON.stringify(newEmployee),
@@ -35,13 +35,12 @@ export default function Formfull() {
   }
   useEffect(() => {
     addemployee() 
-      
   }, [])
- const handleChange=(a)=>{
+ /*const handleChange=(a)=>{
    if(a.target.files.length!==0){
      setImg(URL.createObjectURL(a.target.files[0]))
     }
-  }
+  }*/
 
   return (
     <div className='Form'>
@@ -70,7 +69,8 @@ export default function Formfull() {
       <input type="file"
       accept='image/*'
       value={img}
-      onChange={handleChange}/>
+      onChange={(a)=>setImg(a.target.value)}
+      />
     </Col>
   </Row>
   <Row>

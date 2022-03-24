@@ -10,10 +10,10 @@ export default function Table() {
   const history=useHistory()
   const getEmployee=()=>{
     //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`)
-    fetch(`https://paripornaform.herokuapp.com/employee`)
+   fetch(`https://paripornaform.herokuapp.com/employee`)
     .then((data)=>data.json())
     .then((a)=>setEmployee(a))
-    console.log(employee)
+    console.log("employee",employee)
   }
   useEffect(getEmployee,[])
   const deleteEmployee = (id) => {
@@ -37,7 +37,8 @@ export default function Table() {
         </tr>
     </thead>
     <tbody>
-      {employee.map(({_id,fullname,mobile,email,img,jobtype,dob,location},index)=>(
+      {employee.map(({_id,fullname,mobile,email,jobtype,dob,location})=>(
+        
         <tr>
         <td>{fullname}</td>
         <td>{email}</td>

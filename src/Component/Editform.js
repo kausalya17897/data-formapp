@@ -18,7 +18,8 @@ export  function Editform() {
     })
     .then((data)=>data.json())
     .then((a)=>setEmployee(a))
-},[id]);
+},[id])
+console.log(employee);
     return employee?<UpdatedEmployee employee={employee}/>:"";
     }
 function UpdatedEmployee({employee}){
@@ -37,7 +38,7 @@ const editEmployee=()=>{
     const updatedEmployee={
         fullname,img,email,mobile,location,jobtype,dob
     };
-    //fetch(`https://61681515ba841a001727c589.mockapi.io/movie/${employee.id}`,{
+   // fetch(`https://61681515ba841a001727c589.mockapi.io/movie/${employee.id}`,{
       fetch(`https://paripornaform.herokuapp.com/employee/${employee._id}`,{ 
     method:"PUT",
         body:JSON.stringify(updatedEmployee),
