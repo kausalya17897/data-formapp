@@ -14,11 +14,12 @@ export default function Formfull(){
   const [location, setLocation] = useState("");
   const [fullname, setFullname] = useState("");
   const [dob, setDob] = useState("");
-  const [img, setImg] = useState({preview:"",data:""});
+  const [img, setImg] = useState("");
   const [status,setStatus]=useState('');
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const history = useHistory();
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     let formData = new FormData()
@@ -56,7 +57,7 @@ export default function Formfull(){
       dob,
       location,
       jobtype,
-      img,
+      img:"",
     };
 
   
@@ -69,7 +70,8 @@ export default function Formfull(){
     body: data,
   }).then((data) => data.json())
   .then((data)=>{
-    newEmployee[img] = data.secure_url
+    newEmployee.img = data.secure_url
+    console.log(newEmployee)
     fetch(`https://paripornaform.herokuapp.com/employee`, {
       method: "POST",
       body: JSON.stringify(newEmployee),
@@ -77,7 +79,9 @@ export default function Formfull(){
         "content-Type": "application/json",
       },
     }).then(() => history.push("/employee"))
-  }}
+  })
+  
+}
   useEffect(() => {
     addemployee();
   }, []);
