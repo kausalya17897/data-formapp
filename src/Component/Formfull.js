@@ -14,11 +14,29 @@ export default function Formfull() {
   const [location, setLocation] = useState("");
   const [fullname, setFullname] = useState("");
   const [dob, setDob] = useState("");
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState({preview:"",data:""});
+  const [status,setStatus]=useState('');
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const history = useHistory();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    let formData = new FormData()
+    formData.append('file', img.data)
+    const response = await fetch('http://localhost:5000/image', {
+      method: 'POST',
+      body: formData,
+    })
+    if (response) setStatus(response.statusText)
+  }
 
+  const handleFileChange = (e) => {
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    }
+    setImg(img)
+  }
   const addemployee = () => {
     console.log(
       "adding...",
@@ -76,13 +94,15 @@ export default function Formfull() {
               <Col xl={6} className="img">
                 <label htmlFor="profilepic la">Profile Pic</label>
                 <Card className="imagebox">
-                  <img className="image" src={img} alt="profilepic" />
+                 {/* <img className="image" src={img} alt="profilepic" />*/}
+                  {img.preview && <img src={img.preview} width='100' height='100' />}
                 </Card>
                 <input
                   type="file"
+                  name="file"
                   accept="image/*"
-                  value={img}
-                  onChange={(a) => setImg(a.target.value)}
+                  
+                  onChange={handleFileChange}
                 />
               </Col>
             </Row>
