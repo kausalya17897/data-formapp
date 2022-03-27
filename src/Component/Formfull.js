@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Table from "./Table";
 
-export default function Formfull() {
+export default function Formfull(){
   const [countrycode, setCountrycode] = useState("");
   const [jobtype, setJobtype] = useState("");
   const [location, setLocation] = useState("");
@@ -48,6 +48,7 @@ export default function Formfull() {
       jobtype,
       img
     );
+   
     const newEmployee = {
       fullname,
       email,
@@ -57,23 +58,30 @@ export default function Formfull() {
       jobtype,
       img,
     };
-    //fetch(`https://62368e85163bf7c4746552f6.mockapi.io/employee`,{
+
+  
+    const data = new FormData();
+  data.append("file", img.data);
+  data.append("upload_preset", "Project1");
+  data.append("cloud_name", "kausalya");
+  fetch("https://api.cloudinary.com/v1_1/kausalya/image/upload",{
+    method: "POST",
+    body: data,
+  }).then((data) => data.json())
+  .then((data)=>{
+    newEmployee[img] = data.secure_url
     fetch(`https://paripornaform.herokuapp.com/employee`, {
       method: "POST",
       body: JSON.stringify(newEmployee),
       headers: {
         "content-Type": "application/json",
       },
-    }).then(() => history.push("/employee"));
-  };
+    }).then(() => history.push("/employee"))
+  }}
   useEffect(() => {
     addemployee();
   }, []);
-  /*const handleChange=(a)=>{
-   if(a.target.files.length!==0){
-     setImg(URL.createObjectURL(a.target.files[0]))
-    }
-  }*/
+  
 
   return (
     <div className="Form">
@@ -95,7 +103,7 @@ export default function Formfull() {
                 <label htmlFor="profilepic la">Profile Pic</label>
                 <Card className="imagebox">
                  {/* <img className="image" src={img} alt="profilepic" />*/}
-                  {img.preview && <img src={img.preview} width='100' height='100' />}
+                  {img.preview && <img src={img.preview} width='100' height='100' alt={img} />}
                 </Card>
                 <input
                   type="file"
