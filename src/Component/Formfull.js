@@ -8,36 +8,26 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Table from "./Table";
 
-export default function Formfull(){
+export default function Formfull() {
   const [countrycode, setCountrycode] = useState("");
   const [jobtype, setJobtype] = useState("");
   const [location, setLocation] = useState("");
   const [fullname, setFullname] = useState("");
   const [dob, setDob] = useState("");
   const [img, setImg] = useState("");
-  const [status,setStatus]=useState('');
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const history = useHistory();
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    let formData = new FormData()
-    formData.append('file', img.data)
-    const response = await fetch('http://localhost:5000/image', {
-      method: 'POST',
-      body: formData,
-    })
-    if (response) setStatus(response.statusText)
-  }
+  const [employee, setEmployee] = useState([]);
 
   const handleFileChange = (e) => {
     const img = {
       preview: URL.createObjectURL(e.target.files[0]),
       data: e.target.files[0],
-    }
-    setImg(img)
-  }
+    };
+    setImg(img);
+  };
+
   const addemployee = () => {
     console.log(
       "adding...",
@@ -49,7 +39,7 @@ export default function Formfull(){
       jobtype,
       img
     );
-   
+
     const newEmployee = {
       fullname,
       email,
@@ -57,35 +47,35 @@ export default function Formfull(){
       dob,
       location,
       jobtype,
-      img:"",
+      img: "",
     };
 
-  
     const data = new FormData();
-  data.append("file", img.data);
-  data.append("upload_preset", "Project1");
-  data.append("cloud_name", "kausalya");
-  fetch("https://api.cloudinary.com/v1_1/kausalya/image/upload",{
-    method: "POST",
-    body: data,
-  }).then((data) => data.json())
-  .then((data)=>{
-    newEmployee.img = data.secure_url
-    console.log(newEmployee)
-    fetch(`https://paripornaform.herokuapp.com/employee`, {
+    data.append("file", img.data);
+    data.append("upload_preset", "Project1");
+    data.append("cloud_name", "kausalya");
+    fetch("https://api.cloudinary.com/v1_1/kausalya/image/upload", {
       method: "POST",
-      body: JSON.stringify(newEmployee),
-      headers: {
-        "content-Type": "application/json",
-      },
-    }).then(() => history.push("/employee"))
-  })
-  
-}
-  useEffect(() => {
-    addemployee();
-  }, []);
-  
+      body: data,
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        newEmployee.img = data.secure_url;
+        console.log(newEmployee);
+        fetch(`https://paripornaform.herokuapp.com/employee`, {
+          method: "POST",
+          body: JSON.stringify(newEmployee),
+          headers: {
+            "content-Type": "application/json",
+          },
+        }).then(() => {
+          fetch(`https://paripornaform.herokuapp.com/employee`)
+            .then((data) => data.json())
+            .then((a) => setEmployee(a.data));
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="Form">
@@ -106,14 +96,15 @@ export default function Formfull(){
               <Col xl={6} className="img">
                 <label htmlFor="profilepic la">Profile Pic</label>
                 <Card className="imagebox">
-                 {/* <img className="image" src={img} alt="profilepic" />*/}
-                  {img.preview && <img src={img.preview} width='100' height='100' alt={img} />}
+                  {/* <img className="image" src={img} alt="profilepic" />*/}
+                  {img.preview && (
+                    <img src={img.preview} width="100" height="100" alt={img} />
+                  )}
                 </Card>
                 <input
                   type="file"
                   name="file"
                   accept="image/*"
-                  
                   onChange={handleFileChange}
                 />
               </Col>
@@ -209,7 +200,7 @@ export default function Formfull(){
             </Row>
           </Container>
         </fieldset>
-        <Table />
+        <Table employee={employee} setEmployee={setEmployee} />
       </Form>
     </div>
   );
